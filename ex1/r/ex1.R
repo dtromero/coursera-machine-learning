@@ -86,6 +86,7 @@ intercept <- theta[1]
 slope <- theta[2]
 
 abline(intercept, slope)
+
 #legend('Training data', 'Linear regression')
 #hold off # don't overlay any more plots on this figure
 
@@ -104,33 +105,35 @@ readline('Program paused. Press enter to continue.\n');
 cat('Visualizing J(theta_0, theta_1) ...\n')
 
 # Grid over which we will calculate J
-theta0_vals <- linspace(-10, 10, 100);
-theta1_vals <- linspace(-1, 4, 100);
+theta0_vals <- seq(-10, 10, length=100);
+theta1_vals <- seq(-1, 4, length=100);
 
 # initialize J_vals to a matrix of 0's
-J_vals <- zeros(length(theta0_vals), length(theta1_vals));
+J_vals <- matrix(0, nrow=length(theta0_vals), ncol=length(theta1_vals));
 
 # Fill out J_vals
-for i <- 1:length(theta0_vals)
-for j <- 1:length(theta1_vals)
-t <- [theta0_vals(i); theta1_vals(j)];    
-J_vals(i,j) <- computeCost(X, y, t);
-end
-end
-
+for(i in 1:length(theta0_vals)) {
+  for (j in 1:length(theta1_vals)) {
+    t <- c(theta0_vals[i], theta1_vals[j]);    
+    J_vals[i,j] <- computeCost(X, y, t);
+  }
+}
 
 # Because of the way meshgrids work in the surf command, we need to 
 # transpose J_vals before calling surf, or else the axes will be flipped
 J_vals <- t(J_vals);
 # Surface plot
-figure;
-surf(theta0_vals, theta1_vals, J_vals)
-xlabel('\theta_0'); ylabel('\theta_1');
+#figure;
+#surf(theta0_vals, theta1_vals, J_vals)
+#xlabel('\theta_0'); ylabel('\theta_1');
 
 # Contour plot
-figure;
+#figure;
 # Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100
-contour(theta0_vals, theta1_vals, J_vals, logspace(-2, 3, 20))
-xlabel('\theta_0'); ylabel('\theta_1');
-hold on;
-plot(theta(1), theta(2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+#contour(theta0_vals, theta1_vals, J_vals, logspace(-2, 3, 20))
+#xlabel('\theta_0'); ylabel('\theta_1');
+
+#hold on;
+#plot(theta(1), theta(2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
+
+

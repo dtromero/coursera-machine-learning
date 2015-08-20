@@ -119,21 +119,16 @@ for(i in 1:length(theta0_vals)) {
   }
 }
 
-# Because of the way meshgrids work in the surf command, we need to 
-# transpose J_vals before calling surf, or else the axes will be flipped
-J_vals <- t(J_vals);
-# Surface plot
-#figure;
-#surf(theta0_vals, theta1_vals, J_vals)
-#xlabel('\theta_0'); ylabel('\theta_1');
+persp(theta0_vals, theta1_vals, J_vals
+      ,phi=30, theta = -30
+      ,col="green1"
+      ,main='Surface Plot Gradient Descent', xlab= 'theta_0', ylab='theta_1', zlab='Cost')
 
-# Contour plot
-#figure;
-# Plot J_vals as 15 contours spaced logarithmically between 0.01 and 100
-#contour(theta0_vals, theta1_vals, J_vals, logspace(-2, 3, 20))
-#xlabel('\theta_0'); ylabel('\theta_1');
+#Building the logscale
+i <- seq(-2,3, length.out =20)
+base <- rep(10, length(i))
+l <- base^i
 
-#hold on;
-#plot(theta(1), theta(2), 'rx', 'MarkerSize', 10, 'LineWidth', 2);
-
+contour(theta0_vals, theta1_vals, J_vals, levels=l)
+points(theta[1], theta[2])
 
